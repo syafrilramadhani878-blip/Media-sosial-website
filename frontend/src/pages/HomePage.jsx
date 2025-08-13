@@ -1,6 +1,9 @@
 import React from "react";
 import ProfileSection from "../components/ProfileSection";
 import SocialLinksGrid from "../components/SocialLinksGrid";
+import ContactForm from "../components/ContactForm";
+import Footer from "../components/Footer";
+import { Toaster } from "../components/ui/toaster";
 import { socialLinks } from "../data/mock";
 
 const HomePage = () => {
@@ -10,8 +13,11 @@ const HomePage = () => {
         <div className="space-y-8">
           <ProfileSection />
           <SocialLinksGrid links={socialLinks} />
+          <ContactForm />
+          <Footer />
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
