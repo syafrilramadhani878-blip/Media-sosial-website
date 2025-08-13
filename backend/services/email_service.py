@@ -4,6 +4,12 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import logging
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load environment variables
+ROOT_DIR = Path(__file__).parent.parent
+load_dotenv(ROOT_DIR / '.env')
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +19,7 @@ class EmailService:
         self.gmail_password = os.environ.get('GMAIL_APP_PASSWORD')
         self.smtp_server = "smtp.gmail.com"
         self.smtp_port = 587
+        logger.info(f"EmailService initialized - Gmail: {self.gmail_email}, Password configured: {bool(self.gmail_password)}")
 
     def send_contact_message(self, name: str, sender_email: str, message: str) -> bool:
         """
