@@ -238,12 +238,16 @@ class BackendTester:
         except Exception as e:
             self.log_test("Contact Form Special Characters", False, f"Connection error: {str(e)}")
         
-        # Test with maximum valid length message
+        # Test with maximum valid length message (exactly 1000 chars)
         try:
+            # Create exactly 1000 character message
+            base_message = "Pesan panjang untuk menguji batas maksimum karakter yang diizinkan sistem. "
+            message_1000 = (base_message * 15)[:1000]  # Exactly 1000 chars
+            
             test_data = {
                 "name": "Budi Santoso",
                 "email": "budi.santoso@example.com",
-                "message": "Pesan panjang untuk menguji batas maksimum karakter. " * 20  # Around 1000 chars
+                "message": message_1000
             }
             response = requests.post(f"{API_BASE}/contact", json=test_data, timeout=15)
             
