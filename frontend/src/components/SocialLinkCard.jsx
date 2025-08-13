@@ -30,6 +30,13 @@ const SocialLinkCard = ({ link, index }) => {
     <Card 
       className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:-translate-y-1 bg-white/80 backdrop-blur-sm border border-gray-200/50"
       onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleClick();
+        }
+      }}
       style={{
         animationDelay: `${index * 100}ms`
       }}
