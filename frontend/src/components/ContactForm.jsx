@@ -39,23 +39,40 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // TODO: Replace with actual API call when backend is ready
-      // Simulate API call for now
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast({
-        title: "Pesan Terkirim! ✅",
-        description: "Terima kasih atas masukan Anda. Saya akan membalas segera!",
-        variant: "default"
+      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${BACKEND_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
       });
+
+      const result = await response.json();
       
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        message: ""
-      });
+      if (result.success) {
+        toast({
+          title: "Pesan Terkirim! ✅",
+          description: result.message,
+          variant: "default"
+        });
+        
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          message: ""
+        });
+      } else {
+        toast({
+          title: "Email Belum Dikonfigurasi",
+          description: result.message,
+          variant: "destructive"
+        });
+      }
+      
     } catch (error) {
+      console.error('Contact form error:', error);
       toast({
         title: "Error",
         description: "Gagal mengirim pesan. Silakan coba lagi.",
