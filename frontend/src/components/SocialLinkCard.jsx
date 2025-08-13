@@ -22,7 +22,17 @@ const SocialLinkCard = ({ link, index }) => {
 
   const handleClick = () => {
     if (link.url) {
-      window.open(link.url, '_blank', 'noopener,noreferrer');
+      // Special handling for different platforms
+      if (link.platform.toLowerCase() === 'whatsapp') {
+        // WhatsApp should open in new tab/window or WhatsApp app
+        window.open(link.url, '_blank', 'noopener,noreferrer');
+      } else if (link.platform.toLowerCase() === 'email') {
+        // Email should open default email client
+        window.location.href = link.url;
+      } else {
+        // Instagram, TikTok should open in new tab
+        window.open(link.url, '_blank', 'noopener,noreferrer');
+      }
     }
   };
 
